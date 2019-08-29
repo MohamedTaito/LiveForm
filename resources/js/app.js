@@ -41,6 +41,9 @@ import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
 
+import User from './Helpers/User'
+window.User = User
+
 import router from './components/Router/router.js'
 const app = new Vue({
     el: '#app',
