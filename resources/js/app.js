@@ -43,6 +43,7 @@ Vue.use(Vuetify)
 
 import User from './Helpers/User'
 window.User = User
+window.EventBus = new Vue();
 import router from './components/Router/router.js'
 const app = new Vue({
     el: '#app',

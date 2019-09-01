@@ -12,6 +12,7 @@
                   <input v-model="form.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
               </div>
               <button type="submit" class="btn btn-primary">Login</button>
+              <router-link class="btn btn-success" to="/signup">SignUp</router-link>
           </form>
       </div>
   </div>
@@ -28,11 +29,17 @@
             }
         },
         name: "Login.vue",
+        created() {
+            if(User.loggedIn()){
+                this.$router.push({name:'forum'})
+            }
+        },
 
         methods : {
             login(){
                 // console.log(User)
                 User.login(this.form)
+                
             }
         }
     }
