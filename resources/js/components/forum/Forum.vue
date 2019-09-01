@@ -1,9 +1,30 @@
 <template>
-    <h1>hello</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <question v-for="question in questions" :key="question.path" :data=question></question>
+            </div>
+            <div class="col-sm-12 col-md-4">Sidebar</div>
+        </div>
+    </div>
 </template>
 
 <script>
+    import question from './question'
     export default {
+        data() {
+            return {
+                questions: {}
+            }
+        },
+        components: {
+            question
+        },
+        created (){
+            axios.get('/api/question')
+                .then(res => this.questions = res.data.data)
+                .catch(error => console.log(error.response.data))
+        },
         name: "Forum"
     }
 </script>
