@@ -40,10 +40,14 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 
 Vue.use(Vuetify)
+import VueSimplemde from 'vue-simplemde'
 
+Vue.component('vue-simplemde', VueSimplemde)
+import md from 'marked'
 import User from './Helpers/User'
 window.User = User
 window.EventBus = new Vue();
+window.md = md
 import router from './components/Router/router.js'
 const app = new Vue({
     el: '#app',

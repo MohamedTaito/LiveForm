@@ -9,7 +9,7 @@
             <h6 class="card-text text-muted">
                 {{data.user}} said from {{data.created_at}}
             </h6>
-            <p class="card-title">{{data.body}}</p>
+            <p class="card-title" v-html="body"></p>
         </div>
     </div>
 </template>
@@ -19,6 +19,11 @@
         props:[
             'data'
         ],
+        computed:{
+            body(){
+                return md.parse(this.data.body)
+            }
+        },
         name: "question"
     }
 </script>
