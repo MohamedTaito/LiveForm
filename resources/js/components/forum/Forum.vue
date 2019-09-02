@@ -4,13 +4,16 @@
             <div class="col-sm-12 col-md-8">
                 <question v-for="question in questions" :key="question.path" :data=question></question>
             </div>
-            <div class="col-sm-12 col-md-4">Sidebar</div>
+            <div class="col-sm-12 col-md-4">
+                <app-sidebar></app-sidebar>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import question from './question'
+    import AppSidebar from "./Appsidebar";
     export default {
         data() {
             return {
@@ -18,6 +21,7 @@
             }
         },
         components: {
+            AppSidebar,
             question
         },
         created (){
