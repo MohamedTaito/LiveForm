@@ -58527,7 +58527,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-footer text-muted" }, [
-      _vm._v("\n        5 replies\n    ")
+      _vm._v("\n        " + _vm._s(_vm.data.reply_count) + " replies\n    ")
     ])
   ])
 }

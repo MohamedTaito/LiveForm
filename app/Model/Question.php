@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    protected $with = ['replies'];
 
     protected static function boot()
     {

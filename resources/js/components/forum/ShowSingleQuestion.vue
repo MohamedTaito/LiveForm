@@ -10,7 +10,7 @@
             <p class="card-text" v-html="body"></p>
         </div>
         <div class="card-footer text-muted">
-            5 replies
+            {{data.reply_count}} replies
         </div>
     </div>
 
