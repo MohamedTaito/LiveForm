@@ -10,13 +10,18 @@
                 <li class="nav-item active" v-for="item in items" :key="item.title"  v-if="item.show">
                     <router-link class="nav-link" :to="item.to">{{item.title}}</router-link>
                 </li>
+                <li class="nav-item">
+                    <app-notification></app-notification>
+                </li>
             </ul>
         </div>
     </nav>
 </template>
 
 <script>
+    import AppNotification from "./AppNotification";
     export default {
+        components: {AppNotification},
         mounted() {
             console.log('Component mounted.')
         },

@@ -1,20 +1,24 @@
 <template>
     <div class="card">
         <div class="card-header">
-            <div v-if="!editing">
-                <i class="fas fa-pen fas1" @click="edit" v-if="own"></i>
-                <i class="fas fa-trash fas2" @click="destroy" v-if="own"></i>
-            </div>
-            <button class="fas fa-check fas3" @click="update" v-if="editing"></button>
-            <i class="fas fa-times fas4" v-if="editing" @click="cancel"></i>
+            <like :content="data"></like>
             {{data.user}}
         </div>
         <edit-reply :reply=data  v-if="editing"></edit-reply>
         <div class="card-body" v-else>
             <blockquote class="blockquote mb-0">
                 <p v-html="reply"></p>
-                <footer class="blockquote-footer">{{data.created_at}}</footer>
+
             </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+            <footer class="blockquote-footer">{{data.created_at}}</footer>
+            <div v-if="!editing">
+                <i class="fas fa-pen fas1" @click="edit" v-if="own"></i>
+                <i class="fas fa-trash fas2" @click="destroy" v-if="own"></i>
+            </div>
+            <button class="fas fa-check fas3" @click="update" v-if="editing"></button>
+            <i class="fas fa-times fas4" v-if="editing" @click="cancel"></i>
         </div>
     </div>
 </template>
@@ -22,8 +26,9 @@
 <script>
     import Reply from './reply'
     import EditReply from "./EditReply";
+    import Like from "../likes/Like";
     export default {
-        components: {EditReply},
+        components: {Like, EditReply},
         props:['data','index'],
         data(){
             return {
@@ -73,33 +78,36 @@
 <style scoped>
     .fas1 {
         position: absolute;
-        right: 4%;
+        right: 3%;
         top: 35%;
         cursor:pointer;
         color: orange;
     }
     .fas2 {
         position: absolute;
-        right: 2%;
+        right: 1.5%;
         top: 35%;
         cursor:pointer;
         color: red;
     }
     .fas3 {
         position: absolute;
-        right: 4%;
+        right: 3%;
         top: 35%;
         cursor:pointer;
         color: green;
     }
     .fas4 {
         position: absolute;
-        right: 2%;
+        right: 1.5%;
         top: 35%;
         cursor:pointer;
         color: red;
     }
     .card-header{
+        position: relative;
+    }
+    .card-footer {
         position: relative;
     }
 </style>
