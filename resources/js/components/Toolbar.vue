@@ -11,7 +11,7 @@
                     <router-link class="nav-link" :to="item.to">{{item.title}}</router-link>
                 </li>
                 <li class="nav-item">
-                    <app-notification></app-notification>
+                    <app-notification v-if="loggedIn"></app-notification>
                 </li>
             </ul>
         </div>
@@ -27,6 +27,7 @@
         },
         data() {
             return {
+                loggedIn: User.loggedIn(),
                 items: [
                     {
                         title: 'Forum',

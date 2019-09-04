@@ -1776,6 +1776,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1793,11 +1799,29 @@ __webpack_require__.r(__webpack_exports__);
     getNotifications: function getNotifications() {
       var _this = this;
 
-      axios.get('/api/notifications').then(function (res) {
+      axios.post('/api/notifications').then(function (res) {
         _this.read = res.data.read;
         _this.unread = res.data.unread;
         _this.unreadCount = res.data.unread.length;
       });
+    },
+    readIt: function readIt(notification) {
+      var _this2 = this;
+
+      axios.post('/api/markAsRead', {
+        id: notification.id
+      }).then(function (res) {
+        _this2.unread.splice(notification, 1);
+
+        _this2.read.push(notification);
+
+        _this2.unreadCount--;
+      });
+    }
+  },
+  computed: {
+    color: function color() {
+      return this.unreadCount > 0 ? true : false;
     }
   },
   name: "AppNotification"
@@ -1878,6 +1902,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      loggedIn: User.loggedIn(),
       items: [{
         title: 'Forum',
         to: '/forum',
@@ -21319,7 +21344,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fas10[data-v-14f98411] {\n    font-size: 20px;\n    color: red;\n    margin: 12px 0 0 5px;\n    cursor:pointer;\n}\n\n", ""]);
+exports.push([module.i, "\n.fas10[data-v-14f98411] {\n    font-size: 20px;\n    color:rosybrown;\n    margin: 12px 0 0 5px;\n    cursor:pointer;\n}\n.red[data-v-14f98411] {\n    color:red;\n}\n\n", ""]);
 
 // exports
 
@@ -58490,8 +58515,17 @@ var render = function() {
               fn: function(ref) {
                 var on = ref.on
                 return [
-                  _c("i", _vm._g({ staticClass: "fas fa-bell fas10" }, on)),
-                  _vm._v(" 5\n        ")
+                  _c(
+                    "i",
+                    _vm._g(
+                      {
+                        staticClass: "fas fa-bell fas10",
+                        class: [{ red: _vm.color }]
+                      },
+                      on
+                    )
+                  ),
+                  _vm._v(_vm._s(_vm.unreadCount) + "\n        ")
                 ]
               }
             }
@@ -58502,13 +58536,46 @@ var render = function() {
           _c(
             "v-list",
             [
-              _c(
-                "v-list-item",
-                [_c("v-list-item-title", [_vm._v("Notification")])],
-                1
-              )
+              _vm._l(_vm.unread, function(item) {
+                return _c(
+                  "v-list-item",
+                  { key: item.id },
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: item.path } },
+                      [
+                        _c(
+                          "v-list-item-title",
+                          {
+                            on: {
+                              click: function($event) {
+                                return _vm.readIt(item)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(item.question))]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c("v-divider"),
+              _vm._v(" "),
+              _vm._l(_vm.read, function(item) {
+                return _c(
+                  "v-list-item",
+                  { key: item.id },
+                  [_c("v-list-item-title", [_vm._v(_vm._s(item.question))])],
+                  1
+                )
+              })
             ],
-            1
+            2
           )
         ],
         1
@@ -58624,7 +58691,12 @@ var render = function() {
                   : _vm._e()
               }),
               _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [_c("app-notification")], 1)
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [_vm.loggedIn ? _c("app-notification") : _vm._e()],
+                1
+              )
             ],
             2
           )
